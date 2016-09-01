@@ -20,5 +20,7 @@ private:
 	int nbrVertices;
 	float *m_vertices;
 	float *m_couleurs;
+
+	float angle = 0;
 };
 

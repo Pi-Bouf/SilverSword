@@ -66,6 +66,7 @@ void Drawing::afficher(mat4 modelview, mat4 projection)
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, m_couleurs);
 	glEnableVertexAttribArray(1);
 
+	modelview = rotate(modelview, angle, vec3(1.0, 1.0, 0.0));
 
 	glUniformMatrix4fv(glGetUniformLocation(m_shader->getProgramID(), "modelview"), 1, GL_FALSE, value_ptr(modelview));
 	glUniformMatrix4fv(glGetUniformLocation(m_shader->getProgramID(), "projection"), 1, GL_FALSE, value_ptr(projection));
@@ -76,4 +77,10 @@ void Drawing::afficher(mat4 modelview, mat4 projection)
 	glDisableVertexAttribArray(0);
 
 	glUseProgram(0);
+
+	angle += 0.05;
+	if (angle == 360)
+	{
+		angle = 0;
+	}
 }

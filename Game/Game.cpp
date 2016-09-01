@@ -78,7 +78,7 @@ void Game::execGame()
 			endingGame = true;
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		modelview = lookAt(vec3(3, 3, 3), vec3(0, 0, 0), vec3(0, 1, 0));
+		modelview = lookAt(vec3(3, 3, 20), vec3(0, 0, 0), vec3(0, 1, 0));
 
 		draw.afficher(modelview, projection);
 
