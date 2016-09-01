@@ -60,11 +60,15 @@ void Game::initGame()
 
 void Game::execGame()
 {
-	cout << "Game while starting..." << endl;
-	float vertices[] = { -0.5, 0.1, 0.0, 0.5, 0.5, 0.1, 0.5, -0.1, -0.5, -0.1, 0.0, -0.5 };
-	float couleurs[] = { 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0 };
+	cout << "Init projection & modelview..." << endl;
+	projection = perspective(70.0, (double)windowWidth / windowHeight, 1.0, 100.0);
+	modelview = mat4(1.0);
 
-	Shader shaderBasique("Shaders/couleur2D.vert", "Shaders/couleur2D.frag");
+	cout << "Game while starting..." << endl;
+	float vertices[] = { -0.5, -0.5, -1.0, 0.0, 0.5, -1.0, 0.5, -0.5, -1.0 };
+	float couleurs[] = { 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0 };
+
+	Shader shaderBasique("Shaders/couleur3D.vert", "Shaders/couleur3D.frag");
 	shaderBasique.charger();
 
 	while (!endingGame)
@@ -76,13 +80,16 @@ void Game::execGame()
 
 		glUseProgram(shaderBasique.getProgramID());
 
-		glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, vertices);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, vertices);
 		glEnableVertexAttribArray(0);
 
 		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, couleurs);
 		glEnableVertexAttribArray(1);
 
-		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glUniformMatrix4fv(glGetUniformLocation(shaderBasique.getProgramID(), "modelview"), 1, GL_FALSE, value_ptr(modelview));
+		glUniformMatrix4fv(glGetUniformLocation(shaderBasique.getProgramID(), "projection"), 1, GL_FALSE, value_ptr(projection));
+
+		glDrawArrays(GL_TRIANGLES, 0, 3);
 
 		glDisableVertexAttribArray(1);
 		glDisableVertexAttribArray(0);
@@ -90,6 +97,7 @@ void Game::execGame()
 		glUseProgram(0);
 
 		SDL_GL_SwapWindow(gameWindow);
+		modelview = mat4(1.0);
 	}
 
 	exitGame();
