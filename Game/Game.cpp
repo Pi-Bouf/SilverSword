@@ -62,8 +62,9 @@ void Game::execGame()
 {
 	cout << "Game while starting..." << endl;
 	float vertices[] = { -0.5, 0.1, 0.0, 0.5, 0.5, 0.1, 0.5, -0.1, -0.5, -0.1, 0.0, -0.5 };
+	float couleurs[] = { 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0 };
 
-	Shader shaderBasique("Shaders/basique2D.vert", "Shaders/basique2D.frag");
+	Shader shaderBasique("Shaders/couleur2D.vert", "Shaders/couleur2D.frag");
 	shaderBasique.charger();
 
 	while (!endingGame)
@@ -73,11 +74,20 @@ void Game::execGame()
 			endingGame = true;
 		glClear(GL_COLOR_BUFFER_BIT);
 
+		glUseProgram(shaderBasique.getProgramID());
 
 		glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, vertices);
 		glEnableVertexAttribArray(0);
+
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, couleurs);
+		glEnableVertexAttribArray(1);
+
 		glDrawArrays(GL_TRIANGLES, 0, 6);
+
+		glDisableVertexAttribArray(1);
 		glDisableVertexAttribArray(0);
+
+		glUseProgram(0);
 
 		SDL_GL_SwapWindow(gameWindow);
 	}
