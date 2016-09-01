@@ -56,6 +56,9 @@ void Game::initGame()
 		SDL_DestroyWindow(gameWindow);
 		SDL_Quit();
 	}
+	else {
+		glEnable(GL_DEPTH_TEST);
+	}
 }
 
 void Game::execGame()
@@ -64,37 +67,20 @@ void Game::execGame()
 	projection = perspective(70.0, (double)windowWidth / windowHeight, 1.0, 100.0);
 	modelview = mat4(1.0);
 
-	cout << "Game while starting..." << endl;
-	float vertices[] = { -0.5, -0.5, -1.0, 0.0, 0.5, -1.0, 0.5, -0.5, -1.0 };
-	float couleurs[] = { 1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0 };
+	Drawing draw("COUCOU");
 
-	Shader shaderBasique("Shaders/couleur3D.vert", "Shaders/couleur3D.frag");
-	shaderBasique.charger();
+	cout << "Game while starting..." << endl;
 
 	while (!endingGame)
 	{
 		SDL_WaitEvent(&sdlEvent);
 		if (sdlEvent.window.event == SDL_WINDOWEVENT_CLOSE)
 			endingGame = true;
-		glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		glUseProgram(shaderBasique.getProgramID());
+		modelview = lookAt(vec3(3, 3, 3), vec3(0, 0, 0), vec3(0, 1, 0));
 
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, vertices);
-		glEnableVertexAttribArray(0);
-
-		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, couleurs);
-		glEnableVertexAttribArray(1);
-
-		glUniformMatrix4fv(glGetUniformLocation(shaderBasique.getProgramID(), "modelview"), 1, GL_FALSE, value_ptr(modelview));
-		glUniformMatrix4fv(glGetUniformLocation(shaderBasique.getProgramID(), "projection"), 1, GL_FALSE, value_ptr(projection));
-
-		glDrawArrays(GL_TRIANGLES, 0, 3);
-
-		glDisableVertexAttribArray(1);
-		glDisableVertexAttribArray(0);
-
-		glUseProgram(0);
+		draw.afficher(modelview, projection);
 
 		SDL_GL_SwapWindow(gameWindow);
 		modelview = mat4(1.0);
