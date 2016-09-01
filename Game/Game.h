@@ -1,6 +1,11 @@
 #include <iostream>
 #include <SDL.h>
 #include <GL/glew.h>
+
+#include <glm.hpp>
+#include <gtx\transform.hpp>
+#include <gtc\type_ptr.hpp>
+
 #include "Shader.h"
 using namespace std;
 
