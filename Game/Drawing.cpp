@@ -1,9 +1,10 @@
 #include "Drawing.h"
 
 
-Drawing::Drawing(string name)
+Drawing::Drawing(string name, Input *e)
 {
 	drawingName = name;
+	event = e;
 	m_shader = new Shader("Shaders/couleur3D.vert", "Shaders/couleur3D.frag");
 	m_shader->charger();
 	
@@ -55,7 +56,8 @@ void Drawing::afficher(mat4 modelview, mat4 projection)
 {
 	glUseProgram(m_shader->getProgramID());
 
-
+	if (event->getKey(SDL_SCANCODE_Y))
+		cout << "IT WORKS !" << endl;
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, m_vertices);
 	glEnableVertexAttribArray(0);
 

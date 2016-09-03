@@ -5,6 +5,7 @@
 #include <gtx\transform.hpp>
 #include <gtc\type_ptr.hpp>
 #include "Shader.h"
+#include "Input.h"
 
 using namespace std;
 using namespace glm;
@@ -12,7 +13,7 @@ using namespace glm;
 class Drawing
 {
 public:
-	Drawing(string name);
+	Drawing(string name, Input *e);
 	void afficher(mat4 modelview, mat4 projection);
 private:
 	string drawingName;
@@ -20,7 +21,7 @@ private:
 	int nbrVertices;
 	float *m_vertices;
 	float *m_couleurs;
-
 	float angle = 0;
+	Input *event;
 };
 

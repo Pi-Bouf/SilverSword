@@ -6,6 +6,7 @@
 #include <gtc\type_ptr.hpp>
 #include "Shader.h"
 #include "Drawing.h"
+#include "Input.h"
 
 using namespace std;
 using namespace glm;
@@ -25,7 +26,7 @@ private:
 	int windowHeight;
 	SDL_Window *gameWindow;
 	SDL_GLContext glContext;
-	SDL_Event sdlEvent;
+	Input *event;
 	bool endingGame;
 	mat4 modelview;
 	mat4 projection;

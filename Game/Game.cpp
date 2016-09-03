@@ -65,19 +65,20 @@ void Game::initGame()
 void Game::execGame()
 {
 	cout << "Init projection & modelview..." << endl;
+	event = new Input();
 	projection = perspective(70.0, (double)windowWidth / windowHeight, 1.0, 100.0);
 	modelview = mat4(1.0);
 
-	Drawing draw("COUCOU");
+	Drawing draw("COUCOU", event);
 
 	cout << "Game while starting..." << endl;
 
-	while (!endingGame)
+	while (!event->getEnding())
 	{
 		beginWhile = SDL_GetTicks();
-		SDL_PollEvent(&sdlEvent);
-		if (sdlEvent.window.event == SDL_WINDOWEVENT_CLOSE)
-			endingGame = true;
+
+		event->updateEvent();
+
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		modelview = lookAt(vec3(3, 10, 20), vec3(0, 0, 0), vec3(0, 1, 0));
