@@ -29,5 +29,7 @@ private:
 	bool endingGame;
 	mat4 modelview;
 	mat4 projection;
+	unsigned int frameRate;
+	Uint32 beginWhile = 0, endingWhile = 0, timeWhile = 0;
 };
 

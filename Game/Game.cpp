@@ -9,6 +9,7 @@ Game::Game(string title, int width, int height)
 	windowHeight = height;
 	gameWindow = 0;
 	glContext = 0;
+	frameRate = 1000 / 70;
 	endingGame = false;
 }
 
@@ -73,17 +74,24 @@ void Game::execGame()
 
 	while (!endingGame)
 	{
-		SDL_WaitEvent(&sdlEvent);
+		beginWhile = SDL_GetTicks();
+		SDL_PollEvent(&sdlEvent);
 		if (sdlEvent.window.event == SDL_WINDOWEVENT_CLOSE)
 			endingGame = true;
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		modelview = lookAt(vec3(3, 3, 20), vec3(0, 0, 0), vec3(0, 1, 0));
+		modelview = lookAt(vec3(3, 10, 20), vec3(0, 0, 0), vec3(0, 1, 0));
 
 		draw.afficher(modelview, projection);
 
 		SDL_GL_SwapWindow(gameWindow);
 		modelview = mat4(1.0);
+
+		endingWhile = SDL_GetTicks();
+		timeWhile = endingWhile - beginWhile;
+
+		if (timeWhile < frameRate)
+			SDL_Delay(frameRate - timeWhile);
 	}
 
 	exitGame();
