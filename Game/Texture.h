@@ -20,5 +20,6 @@ public:
 private:
 	string image_path;
 	GLuint textureID;
+	SDL_Surface *pixelReverse(SDL_Surface *surface);
 };
 #endif

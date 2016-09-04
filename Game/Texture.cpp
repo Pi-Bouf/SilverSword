@@ -6,16 +6,37 @@ Texture::Texture()
 	textureID = 0;
 }
 
+SDL_Surface* Texture::pixelReverse(SDL_Surface *surface)
+{
+	SDL_Surface *reverseImage = SDL_CreateRGBSurface(0, surface->w, surface->h, surface->format->BitsPerPixel, surface->format->Rmask, surface->format->Gmask, surface->format->Bmask, surface->format->Amask);
+
+	// Tableau intermédiaire
+	unsigned char* pixelsSources = (unsigned char*)surface->pixels;
+	unsigned char* pixelsReverse = (unsigned char*)reverseImage->pixels;
+
+	for (int i = 0; i < surface->h; i++)
+	{
+		for (int j = 0; j < surface->w * surface->format->BytesPerPixel; j++)
+			pixelsReverse[(surface->w * surface->format->BytesPerPixel * (surface->h - 1 - i)) + j] = pixelsSources[(surface->w * surface->format->BytesPerPixel * i) + j];
+	}
+
+	return reverseImage;
+}
+
 bool Texture::loadTexture()
 {
 	// Création d'une surface
-	SDL_Surface *sdlImage = IMG_Load(image_path.c_str());
+	SDL_Surface *sdlImage_base = IMG_Load(image_path.c_str());
 	// Test s'il y a une erreur
-	if (sdlImage == 0)
+	if (sdlImage_base == 0)
 	{
 		cout << "Error loading texture: " << SDL_GetError() << endl;
 		return false;
 	}
+
+	SDL_Surface *sdlImage = pixelReverse(sdlImage_base);
+	SDL_FreeSurface(sdlImage_base);
+
 	// Génération d'un ID de texture
 	glGenTextures(1, &textureID);
 	// Verouillage de la texture (sinon on ne peut pas travailler dessus)
