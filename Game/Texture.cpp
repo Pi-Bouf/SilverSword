@@ -5,6 +5,19 @@ Texture::Texture()
 {
 	textureID = 0;
 }
+Texture::Texture(Texture const &texture)
+{
+	image_path = texture.image_path;
+	loadTexture();
+}
+
+Texture& Texture::operator=(Texture const &texture)
+{
+	image_path = texture.image_path;
+	loadTexture();
+
+	return *this;
+}
 
 SDL_Surface* Texture::pixelReverse(SDL_Surface *surface)
 {
@@ -36,6 +49,10 @@ bool Texture::loadTexture()
 
 	SDL_Surface *sdlImage = pixelReverse(sdlImage_base);
 	SDL_FreeSurface(sdlImage_base);
+
+	// Si la texture existe déjà, on supprime
+	if (glIsTexture(textureID) == GL_TRUE)
+		glDeleteTextures(1, &textureID);
 
 	// Génération d'un ID de texture
 	glGenTextures(1, &textureID);
@@ -97,4 +114,5 @@ GLuint Texture::getTextureID()
 
 Texture::~Texture()
 {
+	glDeleteTextures(1, &textureID);
 }

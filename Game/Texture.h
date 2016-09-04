@@ -13,6 +13,8 @@ class Texture
 {
 public:
 	Texture();
+	Texture(Texture const &texture);
+	Texture& operator=(Texture const &texture);
 	bool loadTexture();
 	void setImagePath(string path);
 	GLuint getTextureID();
