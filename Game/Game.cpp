@@ -69,7 +69,7 @@ void Game::execGame()
 	projection = perspective(70.0, (double)windowWidth / windowHeight, 1.0, 100.0);
 	modelview = mat4(1.0);
 
-	Drawing draw("COUCOU", event);
+	Drawing floor("Herbe", event);
 
 	cout << "Game while starting..." << endl;
 
@@ -81,9 +81,9 @@ void Game::execGame()
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		modelview = lookAt(vec3(3, 3, 3), vec3(0, 0, 0), vec3(0, 1, 0));
+		modelview = lookAt(vec3(3, 8, 10), vec3(0, 0, 0), vec3(0, 1, 0));
 
-		draw.afficher(modelview, projection);
+		floor.afficher(modelview, projection);
 
 		SDL_GL_SwapWindow(gameWindow);
 		modelview = mat4(1.0);

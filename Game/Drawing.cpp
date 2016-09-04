@@ -8,11 +8,11 @@ Drawing::Drawing(string name, Input *e)
 	m_shader = new Shader("Shaders/texture.vert", "Shaders/texture.frag");
 	m_shader->charger();
 
-	texture.setImagePath("Textures/Caisse.jpg");
+	texture.setImagePath("Textures/Herbe.jpg");
 	texture.loadTexture();
 	
-	float vertices[] = { -2, -2, -2, 2, -2, -2, 2, 2, -2,
-		-2, -2, -2, -2, 2, -2, 2, 2, -2 };
+	float vertices[] = { -5, 0, -5, -5, 0, 5, 5, 0, 5,
+		5, 0, 5, 5, 0, -5, -5, 0, -5 };
 
 	float couleurs[] = { 
 		0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8,
