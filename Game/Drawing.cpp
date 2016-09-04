@@ -18,8 +18,8 @@ Drawing::Drawing(string name, Input *e)
 		0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8,
 		0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8};
 
-	float texturesTMP[] = { 0, 0, 1, 0, 1, 1,
-		0, 0, 0, 1, 1, 1 };
+	float texturesTMP[] = { 0, 0, 4, 0, 4, 4,
+		0, 0, 0, 4, 4, 4 };
 
 	nbrVertices = sizeof(vertices) / sizeof(float);
 	nbrTextures = sizeof(texturesTMP) / sizeof(float);
@@ -53,7 +53,7 @@ void Drawing::afficher(mat4 modelview, mat4 projection)
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, m_textures);
 	glEnableVertexAttribArray(2);
 
-	modelview = rotate(modelview, angle, vec3(0.0, 1.0, 0.0));
+	//modelview = rotate(modelview, angle, vec3(0.0, 1.0, 0.0));
 
 	glUniformMatrix4fv(glGetUniformLocation(m_shader->getProgramID(), "modelview"), 1, GL_FALSE, value_ptr(modelview));
 	glUniformMatrix4fv(glGetUniformLocation(m_shader->getProgramID(), "projection"), 1, GL_FALSE, value_ptr(projection));
