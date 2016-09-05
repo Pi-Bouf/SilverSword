@@ -15,7 +15,7 @@ public:
 	void cursorCapture(bool state);
 	bool getKey(const SDL_Scancode key) const;
 	bool getMouse(const Uint8 button) const;
-	bool movedMouse();
+	bool movedMouse() const;
 	bool getEnding();//
 
 	int getX() const;

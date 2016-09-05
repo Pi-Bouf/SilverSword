@@ -85,7 +85,7 @@ bool Input::getMouse(const Uint8 button) const
 	return m_mouse[button];
 }
 
-bool Input::movedMouse()
+bool Input::movedMouse() const
 {
 	if ((m_xRel == 0) && (m_yRel == 0))
 	{

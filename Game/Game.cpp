@@ -71,6 +71,10 @@ void Game::execGame()
 
 	Drawing floor("Herbe", event);
 
+	Camera camera(vec3(3, 3, 3), vec3(0, 0, 0), vec3(0, 1, 0));
+	event->cursorCapture(true);
+	event->cursorDisplay(false);
+
 	cout << "Game while starting..." << endl;
 
 	while (!event->getEnding())
@@ -79,9 +83,16 @@ void Game::execGame()
 
 		event->updateEvent();
 
+		if (event->getKey(SDL_SCANCODE_ESCAPE))
+		{
+			event->cursorCapture(false);
+			event->cursorDisplay(true);
+		}
+
+		camera.move(event);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		modelview = lookAt(vec3(3, 8, 10), vec3(0, 0, 0), vec3(0, 1, 0));
+		camera.lookAt(modelview);
 
 		floor.afficher(modelview, projection);
 

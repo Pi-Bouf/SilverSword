@@ -7,6 +7,7 @@
 #include "Shader.h"
 #include "Drawing.h"
 #include "Input.h"
+#include "Camera.h"
 
 using namespace std;
 using namespace glm;
