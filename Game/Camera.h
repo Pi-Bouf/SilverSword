@@ -17,6 +17,8 @@ public:
 	void orientation(int xRel, int yRel);
 	void move(Input* const &input);
 	void lookAt(mat4 &modelview);
+	void setTargetPoint(vec3 targetPoint);
+	void setPosition(vec3 position);
 	~Camera();
 private:
 	float m_phi;
@@ -26,5 +28,7 @@ private:
 	vec3 m_lateralMove;
 	vec3 m_position;
 	vec3 m_targetPoint;
+	float moveSpeed = 0.1;
+	float mouseSpeed = 0.2;
 };
 #endif

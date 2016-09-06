@@ -76,7 +76,6 @@ void Game::execGame()
 	event->cursorDisplay(false);
 
 	cout << "Game while starting..." << endl;
-
 	while (!event->getEnding())
 	{
 		beginWhile = SDL_GetTicks();

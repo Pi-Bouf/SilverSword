@@ -5,15 +5,16 @@ Camera::Camera() : m_phi(0), m_theta(0), m_orientation(), m_verticalAxe(0, 0, 1)
 {
 }
 
-Camera::Camera(vec3 position, vec3 targetPoint, vec3 verticalAxe) : m_phi(-35.26), m_theta(-135), m_orientation(), m_lateralMove(), m_position(position), m_targetPoint(targetPoint), m_verticalAxe(verticalAxe)
+Camera::Camera(vec3 position, vec3 targetPoint, vec3 verticalAxe) : m_phi(0), m_theta(0), m_orientation(), m_lateralMove(), m_position(position), m_targetPoint(targetPoint), m_verticalAxe(verticalAxe)
 {
+	setTargetPoint(targetPoint);
 }
 
 void Camera::orientation(int xRel, int yRel)
 {
 	// On ajout l'angle (en négatif car dans le sens anti horaire)
-	m_phi += -yRel * 0.5;
-	m_theta += -xRel * 0.5;
+	m_phi += -yRel * mouseSpeed;
+	m_theta += -xRel * mouseSpeed;
 	
 	// Si Phi dépasse ou est en dessous de 89.0/-89.0, l'axe Y devient parralèle, c'est pas bon
 	if (m_phi > 89.0)
@@ -59,25 +60,25 @@ void Camera::move(Input* const &input)
 
 	if (input->getKey(SDL_SCANCODE_UP))
 	{
-		m_position = m_position + m_orientation * 0.5f;
+		m_position = m_position + m_orientation * moveSpeed;
 		m_targetPoint = m_position + m_orientation;
 	}
 
 	if (input->getKey(SDL_SCANCODE_DOWN))
 	{
-		m_position = m_position - m_orientation * 0.5f;
+		m_position = m_position - m_orientation * moveSpeed;
 		m_targetPoint = m_position + m_orientation;
 	}
 
 	if (input->getKey(SDL_SCANCODE_LEFT))
 	{
-		m_position = m_position + m_lateralMove * 0.5f;
+		m_position = m_position + m_lateralMove * moveSpeed;
 		m_targetPoint = m_position + m_orientation;
 	}
 
 	if (input->getKey(SDL_SCANCODE_RIGHT))
 	{
-		m_position = m_position - m_lateralMove * 0.5f;
+		m_position = m_position - m_lateralMove * moveSpeed;
 		m_targetPoint = m_position + m_orientation;
 	}
 }
@@ -85,6 +86,41 @@ void Camera::move(Input* const &input)
 void Camera::lookAt(mat4 &modelview)
 {
 	modelview = glm::lookAt(m_position, m_targetPoint, m_verticalAxe);
+}
+
+void Camera::setTargetPoint(vec3 targetPoint)
+{
+	m_orientation = m_targetPoint - m_position;
+	m_orientation = normalize(m_orientation);
+
+	if (m_verticalAxe.x == 1.0)
+	{
+		m_phi = asin(m_orientation.x);
+		m_theta = acos(m_orientation.y / cos(m_phi));
+		if (m_orientation.y < 0)
+			m_theta *= -1;
+	}
+	else if (m_verticalAxe.y == 1.0) {
+		m_phi = asin(m_orientation.y);
+		m_theta = acos(m_orientation.z / cos(m_phi));
+		if (m_orientation.z < 0)
+			m_theta *= -1;
+	} else {
+		m_phi = asin(m_orientation.x);
+		m_theta = acos(m_orientation.z / cos(m_phi));
+		if (m_orientation.z < 0)
+			m_theta *= -1;
+	}
+
+	m_phi = m_phi * 180 / M_PI;
+	m_theta = m_theta * 180 / M_PI;
+}
+
+void Camera::setPosition(vec3 position)
+{
+	m_position = position;
+
+	m_targetPoint = m_position + m_orientation;
 }
 
 Camera::~Camera()
