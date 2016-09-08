@@ -11,11 +11,21 @@
 using namespace std;
 using namespace glm;
 
+#ifndef BUFFER_OFFSET
+
+#define BUFFER_OFFSET(offset) ((char*)NULL + (offset))
+
+#endif
+
 class Drawing
 {
 public:
 	Drawing(string name, Input *e);
 	void afficher(mat4 modelview, mat4 projection);
+	~Drawing();
+
+	void loadVBO();
+	void updateVBO(void *donnee, int size, int offset);
 private:
 	string drawingName;
 	Shader *m_shader;
@@ -27,5 +37,9 @@ private:
 	float *m_textures;
 	float angle = 0;
 	Input *event;
+
+
+	GLuint vboID;
+	GLuint vaoID;
 };
 

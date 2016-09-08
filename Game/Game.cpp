@@ -70,6 +70,7 @@ void Game::execGame()
 	modelview = mat4(1.0);
 
 	Drawing floor("Herbe", event);
+	floor.loadVBO();
 
 	Camera camera(vec3(3, 3, 3), vec3(0, 0, 0), vec3(0, 1, 0));
 	event->cursorCapture(true);
