@@ -71,6 +71,7 @@ void Game::execGame()
 
 	Drawing floor("Herbe", event);
 	floor.loadVBO();
+	floor.loadVAO();
 
 	Camera camera(vec3(3, 3, 3), vec3(0, 0, 0), vec3(0, 1, 0));
 	event->cursorCapture(true);

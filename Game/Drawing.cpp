@@ -70,23 +70,14 @@ void Drawing::afficher(mat4 modelview, mat4 projection)
 {
 	glUseProgram(m_shader->getProgramID());
 
-	glBindBuffer(GL_ARRAY_BUFFER, vboID);
+	glBindVertexArray(vaoID);
 
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(0));
-	glEnableVertexAttribArray(0);
+		glUniformMatrix4fv(glGetUniformLocation(m_shader->getProgramID(), "modelview"), 1, GL_FALSE, value_ptr(modelview));
+		glUniformMatrix4fv(glGetUniformLocation(m_shader->getProgramID(), "projection"), 1, GL_FALSE, value_ptr(projection));
 
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(nbrVertices*sizeof(float)));
-	glEnableVertexAttribArray(1);
+		glDrawArrays(GL_TRIANGLES, 0, nbrVertices / 3);
 
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-	glUniformMatrix4fv(glGetUniformLocation(m_shader->getProgramID(), "modelview"), 1, GL_FALSE, value_ptr(modelview));
-	glUniformMatrix4fv(glGetUniformLocation(m_shader->getProgramID(), "projection"), 1, GL_FALSE, value_ptr(projection));
-
-	glDrawArrays(GL_TRIANGLES, 0, nbrVertices / 3);
-
-	glDisableVertexAttribArray(1);
-	glDisableVertexAttribArray(0);
+		glBindVertexArray(0);
 
 	glUseProgram(0);
 }
@@ -134,7 +125,29 @@ void Drawing::updateVBO(void *donnee, int size, int offset)
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
+void Drawing::loadVAO()
+{
+	if (glIsVertexArray(vaoID) == GL_TRUE)
+		glDeleteVertexArrays(1, &vaoID);
+
+	glGenVertexArrays(1, &vaoID);
+	glBindVertexArray(vaoID);
+
+		glBindBuffer(GL_ARRAY_BUFFER, vboID);
+
+			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(0));
+			glEnableVertexAttribArray(0);
+
+			glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(nbrVertices*sizeof(float)));
+			glEnableVertexAttribArray(1);
+
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	glBindVertexArray(0);
+}
+
 Drawing::~Drawing()
 {
 	glDeleteBuffers(1, &vboID);
+	glDeleteVertexArrays(1, &vaoID);
 }
