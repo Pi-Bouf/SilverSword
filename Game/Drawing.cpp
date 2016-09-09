@@ -7,7 +7,7 @@ Drawing::Drawing(string name, Input *e)
 	event = e;
 	vboID = 0;
 	vaoID = 0;
-	m_shader = new Shader("Shaders/couleur3D.vert", "Shaders/couleur3D.frag");
+	m_shader = new Shader("Shaders/texture.vert", "Shaders/texture.frag");
 	m_shader->charger();
 
 	texture.setImagePath("Textures/Herbe.jpg");
@@ -45,7 +45,18 @@ Drawing::Drawing(string name, Input *e)
 		0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4,           // Face 6
 		0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4 };          // Face 6
 
-	float texturesTMP[] = { 0, 0, 4, 0, 4, 4,
+	float texturesTMP[] = {
+		0, 0, 4, 0, 4, 4,
+		0, 0, 0, 4, 4, 4,
+		0, 0, 4, 0, 4, 4,
+		0, 0, 0, 4, 4, 4,
+		0, 0, 4, 0, 4, 4,
+		0, 0, 0, 4, 4, 4,
+		0, 0, 4, 0, 4, 4,
+		0, 0, 0, 4, 4, 4,
+		0, 0, 4, 0, 4, 4,
+		0, 0, 0, 4, 4, 4,
+		0, 0, 4, 0, 4, 4,
 		0, 0, 0, 4, 4, 4 };
 
 
@@ -75,7 +86,9 @@ void Drawing::afficher(mat4 modelview, mat4 projection)
 		glUniformMatrix4fv(glGetUniformLocation(m_shader->getProgramID(), "modelview"), 1, GL_FALSE, value_ptr(modelview));
 		glUniformMatrix4fv(glGetUniformLocation(m_shader->getProgramID(), "projection"), 1, GL_FALSE, value_ptr(projection));
 
-		glDrawArrays(GL_TRIANGLES, 0, nbrVertices / 3);
+		glBindTexture(GL_TEXTURE_2D, texture.getTextureID());
+			glDrawArrays(GL_TRIANGLES, 0, nbrVertices / 3);
+		glBindTexture(GL_TEXTURE_2D, 0);
 
 		glBindVertexArray(0);
 
@@ -116,11 +129,11 @@ void Drawing::loadV()
 	glBindBuffer(GL_ARRAY_BUFFER, vboID);
 
 	// On demande de la mémoire sur la carte graphique
-	glBufferData(GL_ARRAY_BUFFER, nbrVertices*sizeof(float)+nbrVertices*sizeof(float), 0, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, nbrVertices*sizeof(float)+nbrTextures*sizeof(float), 0, GL_STATIC_DRAW);
 
 	// On transmet directement les valeurs sur la carte graphique
 	glBufferSubData(GL_ARRAY_BUFFER, 0, nbrVertices*sizeof(float), m_vertices);
-	glBufferSubData(GL_ARRAY_BUFFER, nbrVertices*sizeof(float), nbrVertices*sizeof(float), m_couleurs);
+	glBufferSubData(GL_ARRAY_BUFFER, nbrVertices*sizeof(float), nbrTextures*sizeof(float), m_textures);
 
 	// On retire le vérouillage
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -137,8 +150,8 @@ void Drawing::loadV()
 		// Enregistrement dans la CG des procédures
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(0));
 		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(nbrVertices*sizeof(float)));
-		glEnableVertexAttribArray(1);
+		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(nbrVertices*sizeof(float)));
+		glEnableVertexAttribArray(2);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	// Déverouillage
