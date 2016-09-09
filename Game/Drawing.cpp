@@ -82,27 +82,6 @@ void Drawing::afficher(mat4 modelview, mat4 projection)
 	glUseProgram(0);
 }
 
-void Drawing::loadVBO()
-{
-	if (glIsBuffer(vboID) == GL_TRUE)
-		glDeleteBuffers(1, &vboID);
-
-	// Génération identifiant
-	glGenBuffers(1, &vboID);
-	// Vérouillage
-	glBindBuffer(GL_ARRAY_BUFFER, vboID);
-
-	// On demande de la mémoire sur la carte graphique
-	glBufferData(GL_ARRAY_BUFFER, nbrVertices*sizeof(float) + nbrVertices*sizeof(float), 0, GL_STATIC_DRAW);
-
-	// On transmet directement les valeurs sur la carte graphique
-	glBufferSubData(GL_ARRAY_BUFFER, 0, nbrVertices*sizeof(float), m_vertices);
-	glBufferSubData(GL_ARRAY_BUFFER, nbrVertices*sizeof(float), nbrVertices*sizeof(float), m_couleurs);
-
-	// Déverouillage
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-}
-
 void Drawing::updateVBO(void *donnee, int size, int offset)
 {
 	glBindBuffer(GL_ARRAY_BUFFER, vboID);
@@ -125,25 +104,46 @@ void Drawing::updateVBO(void *donnee, int size, int offset)
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void Drawing::loadVAO()
+void Drawing::loadV()
 {
+	// Si l'identifiant existe déjà, on supprime, évitant les fuites de mémoires
+	if (glIsBuffer(vboID) == GL_TRUE)
+		glDeleteBuffers(1, &vboID);
+
+	// Génération identifiant
+	glGenBuffers(1, &vboID);
+	// Vérouillage
+	glBindBuffer(GL_ARRAY_BUFFER, vboID);
+
+	// On demande de la mémoire sur la carte graphique
+	glBufferData(GL_ARRAY_BUFFER, nbrVertices*sizeof(float)+nbrVertices*sizeof(float), 0, GL_STATIC_DRAW);
+
+	// On transmet directement les valeurs sur la carte graphique
+	glBufferSubData(GL_ARRAY_BUFFER, 0, nbrVertices*sizeof(float), m_vertices);
+	glBufferSubData(GL_ARRAY_BUFFER, nbrVertices*sizeof(float), nbrVertices*sizeof(float), m_couleurs);
+
+	// On retire le vérouillage
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+
+	// Si l'identifiant existe déjà, on le supprime
 	if (glIsVertexArray(vaoID) == GL_TRUE)
 		glDeleteVertexArrays(1, &vaoID);
-
+	// Génération de l'identifiant
 	glGenVertexArrays(1, &vaoID);
 	glBindVertexArray(vaoID);
 
-		glBindBuffer(GL_ARRAY_BUFFER, vboID);
+	glBindBuffer(GL_ARRAY_BUFFER, vboID);
+		// Enregistrement dans la CG des procédures
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(0));
+		glEnableVertexAttribArray(0);
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(nbrVertices*sizeof(float)));
+		glEnableVertexAttribArray(1);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(0));
-			glEnableVertexAttribArray(0);
-
-			glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(nbrVertices*sizeof(float)));
-			glEnableVertexAttribArray(1);
-
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-
+	// Déverouillage
 	glBindVertexArray(0);
+
 }
 
 Drawing::~Drawing()

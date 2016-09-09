@@ -26,8 +26,9 @@ public:
 
 	void loadVBO();
 	void updateVBO(void *donnee, int size, int offset);
-
 	void loadVAO();
+
+	void loadV();
 private:
 	string drawingName;
 	Shader *m_shader;
