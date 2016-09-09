@@ -11,7 +11,14 @@ Shader::Shader(string vertex, string fragment)
 
 bool Shader::load()
 {
+	if (glIsShader(m_vertexID) == GL_TRUE)
+		glDeleteShader(m_vertexID);
 
+	if (glIsShader(m_fragmentID) == GL_TRUE)
+		glDeleteShader(m_fragmentID);
+
+	if (glIsProgram(m_programID) == GL_TRUE)
+		glDeleteProgram(m_programID);
 
 	if (!compileShader(m_vertexID, GL_VERTEX_SHADER, m_vertexSource))
 		return false;
