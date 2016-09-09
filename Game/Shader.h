@@ -1,35 +1,29 @@
 #ifndef DEF_SHADER
 #define DEF_SHADER
 
-#include <GL/glew.h>
-#include <iostream>
 #include <string>
+#include <iostream>
 #include <fstream>
+#include <GL/glew.h>
+
+using namespace std;
 
 class Shader
 {
 public:
-
-	Shader();
-	Shader(Shader const &shaderACopier);
-	Shader(std::string vertexSource, std::string fragmentSource);
+	Shader(string vertexSource, string fragmentSource);
+	bool load();
+	bool compileShader(GLuint &shader, GLenum type, string const &fichierSource);
 	~Shader();
 
-	Shader& operator=(Shader const &shaderACopier);
-
-	bool charger();
-	bool compilerShader(GLuint &shader, GLenum type, std::string const &fichierSource);
-	GLuint getProgramID() const;
-
-
 private:
-
+	string m_vertexSource;
+	string m_fragmentSource;
 	GLuint m_vertexID;
 	GLuint m_fragmentID;
 	GLuint m_programID;
-
-	std::string m_vertexSource;
-	std::string m_fragmentSource;
+public:
+	GLuint getProgramID() const;
 };
 
 #endif

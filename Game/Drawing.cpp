@@ -8,7 +8,7 @@ Drawing::Drawing(string name, Input *e)
 	vboID = 0;
 	vaoID = 0;
 	m_shader = new Shader("Shaders/texture.vert", "Shaders/texture.frag");
-	m_shader->charger();
+	m_shader->load();
 
 	texture.setImagePath("Textures/Herbe.jpg");
 	texture.loadTexture();
