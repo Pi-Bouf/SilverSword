@@ -92,6 +92,8 @@ void Game::execGame()
 
 		camera.move(event);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glEnable(GL_LINE_SMOOTH);
+		glEnable(GL_POLYGON_SMOOTH);
 
 		camera.lookAt(modelview);
 

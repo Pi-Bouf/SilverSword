@@ -34,6 +34,7 @@ private:
 	Shader *m_shader;
 	Texture texture;
 	int nbrVertices;
+	int nbrCouleurs;
 	int nbrTextures;
 	float *m_vertices;
 	float *m_couleurs;

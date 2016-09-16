@@ -7,43 +7,47 @@ Drawing::Drawing(string name, Input *e)
 	event = e;
 	vboID = 0;
 	vaoID = 0;
-	m_shader = new Shader("Shaders/texture.vert", "Shaders/texture.frag");
+	m_shader = new Shader("Shaders/couleur3D.vert", "Shaders/couleur3D.frag");
 	m_shader->load();
 
 	texture.setImagePath("Textures/Herbe.jpg");
 	texture.loadTexture();
 	
-	float vertices[] = { 8.000000, -0.200000, 8.000000, -7.999997, -0.200000, -8.000003, 8.000000, -0.200000, -8.000000,
-		-8.000000, 0.200000, -8.000000, 7.999995, 0.200000, 8.000005, 8.000004, 0.200000, -7.999996,
-		8.000004, 0.200000, -7.999996, 8.000000, -0.200000, 8.000000, 8.000000, -0.200000, -8.000000,
-		7.999995, 0.200000, 8.000005, -8.000001, -0.200000, 7.999999, 8.000000, -0.200000, 8.000000,
-		-8.000003, 0.200000, 7.999997, -7.999997, -0.200000, -8.000003, -8.000001, -0.200000, 7.999999,
-		8.000000, -0.200000, -8.000000, -8.000000, 0.200000, -8.000000, 8.000004, 0.200000, -7.999996,
-		8.000000, -0.200000, 8.000000, -8.000001, -0.200000, 7.999999, -7.999997, -0.200000, -8.000003,
-		-8.000000, 0.200000, -8.000000, -8.000003, 0.200000, 7.999997, 7.999995, 0.200000, 8.000005,
-		8.000004, 0.200000, -7.999996, 7.999995, 0.200000, 8.000005, 8.000000, -0.200000, 8.000000,
-		7.999995, 0.200000, 8.000005, -8.000003, 0.200000, 7.999997, -8.000001, -0.200000, 7.999999,
-		-8.000003, 0.200000, 7.999997, -8.000000, 0.200000, -8.000000, -7.999997, -0.200000, -8.000003,
-		8.000000, -0.200000, -8.000000, -7.999997, -0.200000, -8.000003, -8.000000, 0.200000, -8.000000 };      // Face 6
+	float vertices[] = { -1.0, -1.0, -1.0, 1.0, -1.0, -1.0, 1.0, 1.0, -1.0,     // Face 1
+		-1.0, -1.0, -1.0, -1.0, 1.0, -1.0, 1.0, 1.0, -1.0,     // Face 1
 
-	float couleurs[] = {
-		0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8,           // Face 1
-		0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8,           // Face 1
+		1.0, -1.0, 1.0, 1.0, -1.0, -1.0, 1.0, 1.0, -1.0,       // Face 2
+		1.0, -1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, -1.0,         // Face 2
 
-		0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4,           // Face 2
-		0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4,           // Face 2
+		-1.0, -1.0, 1.0, 1.0, -1.0, 1.0, 1.0, -1.0, -1.0,      // Face 3
+		-1.0, -1.0, 1.0, -1.0, -1.0, -1.0, 1.0, -1.0, -1.0,    // Face 3
 
-		0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4,           // Face 3
-		0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4,           // Face 3
+		-1.0, -1.0, 1.0, 1.0, -1.0, 1.0, 1.0, 1.0, 1.0,        // Face 4
+		-1.0, -1.0, 1.0, -1.0, 1.0, 1.0, 1.0, 1.0, 1.0,        // Face 4
 
-		0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8,           // Face 4
-		0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8, 0.8,           // Face 4
+		-1.0, -1.0, -1.0, -1.0, -1.0, 1.0, -1.0, 1.0, 1.0,     // Face 5
+		-1.0, -1.0, -1.0, -1.0, 1.0, -1.0, -1.0, 1.0, 1.0,     // Face 5
 
-		0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4,           // Face 5
-		0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4,           // Face 5
+		-1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, -1.0,         // Face 6
+		-1.0, 1.0, 1.0, -1.0, 1.0, -1.0, 1.0, 1.0, -1.0 };      // Face 6
 
-		0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4,           // Face 6
-		0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4 };          // Face 6
+	float couleurs[] = { 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0,           // Face 1
+		1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0,           // Face 1
+
+		0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0,           // Face 2
+		0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0,           // Face 2
+
+		0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0,           // Face 3
+		0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0,           // Face 3
+
+		1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0,           // Face 4
+		1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0,           // Face 4
+
+		0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0,           // Face 5
+		0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0,           // Face 5
+
+		0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0,           // Face 6
+		0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0 };          // Face 6
 
 	float texturesTMP[] = {
 		0, 0, 4, 0, 4, 4,
@@ -61,15 +65,19 @@ Drawing::Drawing(string name, Input *e)
 
 
 	nbrVertices = sizeof(vertices) / sizeof(float);
+	nbrCouleurs = sizeof(couleurs) / sizeof(float);
 	nbrTextures = sizeof(texturesTMP) / sizeof(float);
 	m_vertices = new float[nbrVertices];
-	m_couleurs = new float[nbrVertices];
+	m_couleurs = new float[nbrCouleurs];
 	m_textures = new float[nbrTextures];
 	
 	for (int i = 0; i < nbrVertices; i++)
 	{
 		m_vertices[i] = vertices[i];
-		m_couleurs[i] = couleurs[i];
+	}
+	for (int k = 0; k < nbrCouleurs; k++)
+	{
+		m_couleurs[k] = couleurs[k];
 	}
 	for (int j = 0; j < nbrTextures; j++)
 	{
@@ -85,12 +93,13 @@ void Drawing::afficher(mat4 modelview, mat4 projection)
 
 		glUniformMatrix4fv(glGetUniformLocation(m_shader->getProgramID(), "modelview"), 1, GL_FALSE, value_ptr(modelview));
 		glUniformMatrix4fv(glGetUniformLocation(m_shader->getProgramID(), "projection"), 1, GL_FALSE, value_ptr(projection));
+		glUniform1f(glGetUniformLocation(m_shader->getProgramID(), "time"), SDL_GetTicks()*0.0005);
 
-		glBindTexture(GL_TEXTURE_2D, texture.getTextureID());
+		//glBindTexture(GL_TEXTURE_2D, texture.getTextureID());
 			glDrawArrays(GL_TRIANGLES, 0, nbrVertices / 3);
-		glBindTexture(GL_TEXTURE_2D, 0);
+		//glBindTexture(GL_TEXTURE_2D, 0);
 
-		glBindVertexArray(0);
+	glBindVertexArray(0);
 
 	glUseProgram(0);
 }
@@ -129,11 +138,11 @@ void Drawing::loadV()
 	glBindBuffer(GL_ARRAY_BUFFER, vboID);
 
 	// On demande de la mémoire sur la carte graphique
-	glBufferData(GL_ARRAY_BUFFER, nbrVertices*sizeof(float)+nbrTextures*sizeof(float), 0, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, nbrVertices*sizeof(float) + nbrCouleurs*sizeof(float), 0, GL_STATIC_DRAW);
 
 	// On transmet directement les valeurs sur la carte graphique
 	glBufferSubData(GL_ARRAY_BUFFER, 0, nbrVertices*sizeof(float), m_vertices);
-	glBufferSubData(GL_ARRAY_BUFFER, nbrVertices*sizeof(float), nbrTextures*sizeof(float), m_textures);
+	glBufferSubData(GL_ARRAY_BUFFER, nbrVertices*sizeof(float), nbrCouleurs*sizeof(float), m_couleurs);
 
 	// On retire le vérouillage
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -150,8 +159,8 @@ void Drawing::loadV()
 		// Enregistrement dans la CG des procédures
 		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(0));
 		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(nbrVertices*sizeof(float)));
-		glEnableVertexAttribArray(2);
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, BUFFER_OFFSET(nbrVertices*sizeof(float)));
+		glEnableVertexAttribArray(1);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	// Déverouillage
