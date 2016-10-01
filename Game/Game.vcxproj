@@ -44,12 +44,12 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Users\pierr\Desktop\OpenGL Test\Game\Game\glm;C:\Users\pierr\Desktop\OpenGL Test\Game\Game\glew-2.0.0\include;C:\Users\pierr\Desktop\OpenGL Test\Game\Game\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\Game\glm;$(SolutionDir)\Game\glew-2.0.0\include;$(SolutionDir)\Game\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>opengl32.lib;glew32.lib;SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>C:\Users\pierr\Desktop\OpenGL Test\Game\Game\glew-2.0.0\lib\Release\Win32;C:\Users\pierr\Desktop\OpenGL Test\Game\Game\SDL2\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)\Game\glew-2.0.0\lib\Release\Win32;$(SolutionDir)\Game\SDL2\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
