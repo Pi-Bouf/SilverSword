@@ -76,7 +76,7 @@ void Game::execGame()
 	event->cursorCapture(true);
 	event->cursorDisplay(false);
 
-	Skybox sky();
+	Skybox test = Skybox();
 
 	cout << "Game while starting..." << endl;
 	while (!event->getEnding())
