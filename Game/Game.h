@@ -8,6 +8,7 @@
 #include "Drawing.h"
 #include "Input.h"
 #include "Camera.h"
+#include "Skybox.h"
 
 using namespace std;
 using namespace glm;

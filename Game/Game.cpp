@@ -1,6 +1,5 @@
 #include "Game.h"
 
-
 Game::Game(string title, int width, int height)
 {
 	cout << "Starting game: " << title.c_str() << endl;
@@ -76,6 +75,8 @@ void Game::execGame()
 	Camera camera(vec3(3, 3, 3), vec3(0, 0, 0), vec3(0, 1, 0));
 	event->cursorCapture(true);
 	event->cursorDisplay(false);
+
+	Skybox sky();
 
 	cout << "Game while starting..." << endl;
 	while (!event->getEnding())
