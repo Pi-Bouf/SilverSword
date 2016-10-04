@@ -7,8 +7,6 @@
 #include "gtx\transform.hpp"
 using namespace glm;
 
-#define M_PI 3.14159265358979323846
-
 class Camera
 {
 public:
@@ -28,7 +26,7 @@ private:
 	vec3 m_lateralMove;
 	vec3 m_position;
 	vec3 m_targetPoint;
-	float moveSpeed = 0.1;
-	float mouseSpeed = 0.2;
+	float moveSpeed = 0.5f;
+	float mouseSpeed = 0.2f;
 };
 #endif
