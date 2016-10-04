@@ -92,6 +92,7 @@ void Game::execGame()
 
 		camera.move(event);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glClearColor(1.0, 1.0, 1.0, 1.0);
 		glEnable(GL_LINE_SMOOTH);
 		glEnable(GL_POLYGON_SMOOTH);
 
@@ -101,7 +102,6 @@ void Game::execGame()
 
 		SDL_GL_SwapWindow(gameWindow);
 		modelview = mat4(1.0);
-
 		endingWhile = SDL_GetTicks();
 		timeWhile = endingWhile - beginWhile;
 
