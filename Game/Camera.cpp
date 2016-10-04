@@ -22,8 +22,8 @@ void Camera::orientation(int xRel, int yRel)
 	else if (m_phi < -89.0)
 		m_phi = -89.0;
 
-	float phiRadian = m_phi * M_PI / 180;
-	float thetaRadian = m_theta * M_PI / 180;
+	float phiRadian = float(m_phi * M_PI / 180);
+	float thetaRadian = float(m_theta * M_PI / 180);
 
 	if (m_verticalAxe.x == 1.0)
 	{
@@ -112,8 +112,8 @@ void Camera::setTargetPoint(vec3 targetPoint)
 			m_theta *= -1;
 	}
 
-	m_phi = m_phi * 180 / M_PI;
-	m_theta = m_theta * 180 / M_PI;
+	m_phi = float(m_phi * 180 / M_PI);
+	m_theta = float(m_theta * 180 / M_PI);
 }
 
 void Camera::setPosition(vec3 position)
