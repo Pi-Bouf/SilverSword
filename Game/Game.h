@@ -11,7 +11,6 @@
 #include "Skybox.h"
 
 using namespace std;
-using namespace glm;
 
 class Game
 {
@@ -30,8 +29,8 @@ private:
 	SDL_GLContext glContext;
 	Input *event;
 	bool endingGame;
-	mat4 modelview;
-	mat4 projection;
+	glm::mat4 modelview;
+	glm::mat4 projection;
 	unsigned int frameRate;
 	Uint32 beginWhile = 0, endingWhile = 0, timeWhile = 0;
 };

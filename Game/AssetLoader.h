@@ -1,13 +1,17 @@
-#include <fstream>
-#include <iostream>
-#include <string>
+#include <QString>
+#include <QDebug>
+#include <QTextStream>
+#include <QFile>
 
-using namespace std;
 
 class AssetLoader
 {
 public:
-	AssetLoader(string data);
+	AssetLoader(QString data);
 	~AssetLoader();
+
+private:
+	QString assetName;
+	QString textureName;
 };
 

@@ -66,13 +66,13 @@ void Game::execGame()
 {
 	cout << "Init projection & modelview..." << endl;
 	event = new Input();
-	projection = perspective(70.0, (double)windowWidth / windowHeight, 1.0, 100.0);
-	modelview = mat4(1.0);
+	projection = glm::perspective(70.0, (double)windowWidth / windowHeight, 1.0, 100.0);
+	modelview = glm::mat4(1.0);
 
 	Drawing floor("Herbe", event);
 	floor.loadV();
 
-	Camera camera(vec3(3, 3, 3), vec3(0, 0, 0), vec3(0, 1, 0));
+	Camera camera(glm::vec3(3, 3, 3), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
 	event->cursorCapture(true);
 	event->cursorDisplay(false);
 
@@ -102,7 +102,7 @@ void Game::execGame()
 		floor.afficher(modelview, projection);
 
 		SDL_GL_SwapWindow(gameWindow);
-		modelview = mat4(1.0);
+		modelview = glm::mat4(1.0);
 		endingWhile = SDL_GetTicks();
 		timeWhile = endingWhile - beginWhile;
 

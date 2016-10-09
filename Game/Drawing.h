@@ -9,7 +9,7 @@
 #include "Texture.h"
 
 using namespace std;
-using namespace glm;
+
 
 #ifndef BUFFER_OFFSET
 
@@ -21,7 +21,7 @@ class Drawing
 {
 public:
 	Drawing(string name, Input *e);
-	void afficher(mat4 modelview, mat4 projection);
+	void afficher(glm::mat4 modelview, glm::mat4 projection);
 	~Drawing();
 
 	void loadVBO();

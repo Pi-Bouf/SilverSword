@@ -1,19 +1,42 @@
 #include "AssetLoader.h"
+#include <iostream>
 
-AssetLoader::AssetLoader(string data)
+using namespace std;
+
+AssetLoader::AssetLoader(QString data)
 {
-	cout << "AssetLoader for " + data << endl;
-	string path = "Data/" + data;
-	ifstream file(path.c_str());
+	QFile file("Data/data_skybox");
+	if (!file.open(QIODevice::ReadOnly)) {
+	}
 
-	if (!file)
-	{
-		cout << "ERROR ! The data file " + path + " cannot be loaded !" << endl;
+	QTextStream in(&file);
+
+	while (!in.atEnd()) {
+		QString line = in.readLine();
+		qDebug() << line;
 	}
-	else
+
+	file.close();
+
+	/*
+	string lineFile;
+	string verticesSource;
+	getline(file, lineFile);
+	assetName = lineFile.substr(6, lineFile.length());
+	getline(file, lineFile);
+	textureName = lineFile.substr(8, lineFile.length());
+
+	while (getline(file, lineFile))
 	{
-		cout << "File " + path + " loaded !" << endl;
+		if (lineFile.substr(0, 2) == "#v")
+		{
+			verticesSource += lineFile.substr(3, lineFile.length());
+		}
 	}
+
+	QString zorro = "ok";
+	*/
+	//cout << "Asset " + assetName + " loaded !" << endl;
 }
 
 AssetLoader::~AssetLoader()

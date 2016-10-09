@@ -132,7 +132,7 @@ Drawing::Drawing(string name, Input *e)
 	}
 }
 
-void Drawing::afficher(mat4 modelview, mat4 projection)
+void Drawing::afficher(glm::mat4 modelview, glm::mat4 projection)
 {
 	glUseProgram(m_shader->getProgramID());
 

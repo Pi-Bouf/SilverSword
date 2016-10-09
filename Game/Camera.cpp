@@ -5,7 +5,7 @@ Camera::Camera() : m_phi(0), m_theta(0), m_orientation(), m_verticalAxe(0, 0, 1)
 {
 }
 
-Camera::Camera(vec3 position, vec3 targetPoint, vec3 verticalAxe) : m_phi(0), m_theta(0), m_orientation(), m_lateralMove(), m_position(position), m_targetPoint(targetPoint), m_verticalAxe(verticalAxe)
+Camera::Camera(glm::vec3 position, glm::vec3 targetPoint, glm::vec3 verticalAxe) : m_phi(0), m_theta(0), m_orientation(), m_lateralMove(), m_position(position), m_targetPoint(targetPoint), m_verticalAxe(verticalAxe)
 {
 	setTargetPoint(targetPoint);
 }
@@ -83,12 +83,12 @@ void Camera::move(Input* const &input)
 	}
 }
 
-void Camera::lookAt(mat4 &modelview)
+void Camera::lookAt(glm::mat4 &modelview)
 {
 	modelview = glm::lookAt(m_position, m_targetPoint, m_verticalAxe);
 }
 
-void Camera::setTargetPoint(vec3 targetPoint)
+void Camera::setTargetPoint(glm::vec3 targetPoint)
 {
 	m_orientation = m_targetPoint - m_position;
 	m_orientation = normalize(m_orientation);
@@ -116,7 +116,7 @@ void Camera::setTargetPoint(vec3 targetPoint)
 	m_theta = float(m_theta * 180 / M_PI);
 }
 
-void Camera::setPosition(vec3 position)
+void Camera::setPosition(glm::vec3 position)
 {
 	m_position = position;
 
