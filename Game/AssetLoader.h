@@ -1,8 +1,13 @@
+#ifndef DEF_ASSETLOADER
+#define DEF_ASSETLOADER
+#include <iostream>
 #include <QString>
-#include <QDebug>
+#include <QStringList>
 #include <QTextStream>
 #include <QFile>
+#include "Console.h"
 
+using namespace std;
 
 class AssetLoader
 {
@@ -13,5 +18,7 @@ public:
 private:
 	QString assetName;
 	QString textureName;
+	float *verticesArray;
 };
 
+#endif

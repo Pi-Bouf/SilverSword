@@ -1,42 +1,40 @@
 #include "AssetLoader.h"
-#include <iostream>
-
-using namespace std;
 
 AssetLoader::AssetLoader(QString data)
 {
-	QFile file("Data/data_skybox");
+	Console::WriteDebug("AssetLoader", "Loading asset " + data.toStdString());
+	QFile file("Data/" + data);
 	if (!file.open(QIODevice::ReadOnly)) {
+		Console::WriteError("AssetLoader", "File " + data.toStdString() + " doesn't exist !");
 	}
 
 	QTextStream in(&file);
 
+	assetName = in.readLine().mid(6);
+	textureName = in.readLine().mid(9);
+
+	QString vertices;
+
 	while (!in.atEnd()) {
 		QString line = in.readLine();
-		qDebug() << line;
-	}
-
-	file.close();
-
-	/*
-	string lineFile;
-	string verticesSource;
-	getline(file, lineFile);
-	assetName = lineFile.substr(6, lineFile.length());
-	getline(file, lineFile);
-	textureName = lineFile.substr(8, lineFile.length());
-
-	while (getline(file, lineFile))
-	{
-		if (lineFile.substr(0, 2) == "#v")
+		if (line.mid(0, 2) == "#v")
 		{
-			verticesSource += lineFile.substr(3, lineFile.length());
+			vertices += line.mid(3);
 		}
 	}
+	vertices.replace('\n', ', ');
+	file.close();
 
-	QString zorro = "ok";
-	*/
-	//cout << "Asset " + assetName + " loaded !" << endl;
+	
+	// Traitement vertices
+	QStringList verticesList = vertices.split(", ");
+	verticesArray = new float(verticesList.length());
+	for (int cpt = 0; cpt < verticesList.length(); cpt++)
+	{
+		verticesArray[cpt] = verticesList[cpt].toFloat();
+	}
+	
+	Console::WriteInfo("AssetLoader", " successfully loaded !");
 }
 
 AssetLoader::~AssetLoader()
